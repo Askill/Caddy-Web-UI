@@ -3,7 +3,8 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"exec"
+	"os/exec"
+
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -54,10 +55,10 @@ func load() {
 func save() {
 	jsonString, _ := json.Marshal(sites)
 	ioutil.WriteFile(saveFile, jsonString, 0777)
+	saveCaddy()
 }
 
 func saveCaddy() {
-	//var caddyFileString = ""
 	tmpl, _ := template.New("Caddy").Parse(`
 	{{.Domain}} {
 		proxy {{.Source}} {{.Target}}
@@ -65,43 +66,44 @@ func saveCaddy() {
 	}`)
 
 	buf := &bytes.Buffer{}
-	buf2 := &bytes.Buffer{}
-
 	for _, value := range sites {
 		tmpl.Execute(buf, value)
-		buf2.WriteString(buf.String())
 	}
-	fmt.Println("String: ", buf2.String())
+
+	fmt.Println("String: ", buf.String())
 
 	f, err := os.OpenFile(saveCaddyFile, os.O_CREATE|os.O_WRONLY, 0777)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	//clear file before writing
+	f.Truncate(0)
+	f.Seek(0, 0)
 	// do the actual work
-	f.WriteString(buf2.String())
+	f.WriteString(buf.String())
 }
 
 func startCaddy() {
 	cmd := exec.Command("nohup caddy -agree &")
 	stdout, err := cmd.Output()
 	if err != nil {
-		Println(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 
-	Print(string(stdout))
+	fmt.Print(string(stdout))
 }
 
 func restartCaddy() {
 	cmd := exec.Command("pkill -USR1 caddy")
 	stdout, err := cmd.Output()
 	if err != nil {
-		Println(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 
-	Print(string(stdout))
+	fmt.Print(string(stdout))
 }
 
 // site controllers
@@ -124,9 +126,8 @@ func updateSite(w http.ResponseWriter, r *http.Request) {
 	delete(sites, id)
 	var site Site
 	_ = json.NewDecoder(r.Body).Decode(&site)
-	newID := getBiggest(sites) + 1
-	site.Id = newID
-	sites[newID] = site
+	fmt.Print(site)
+	sites[id] = site
 	json.NewEncoder(w).Encode(site)
 	save()
 }
