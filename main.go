@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"os/exec"
 
 	"fmt"
@@ -152,6 +153,11 @@ func deleteSite(w http.ResponseWriter, r *http.Request) {
 	save()
 }
 
+func index(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("./index.html")
+	t.Execute(w, nil)
+}
+
 func main() {
 	router := mux.NewRouter()
 
@@ -164,6 +170,14 @@ func main() {
 	router.HandleFunc("/api/Sites", createSite).Methods("POST")
 	router.HandleFunc("/api/Sites/{id}", updateSite).Methods("PUT")
 	router.HandleFunc("/api/Sites/{id}", deleteSite).Methods("DELETE")
+
+	var dir string
+
+	flag.StringVar(&dir, "dir", "./static", "the directory to serve files from. Defaults to the current dir")
+	flag.Parse()
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(dir))))
+
+	router.HandleFunc("/", index).Methods("GET")
 
 	error := http.ListenAndServe(":8000", router)
 	save()
