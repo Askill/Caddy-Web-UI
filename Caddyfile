@@ -1,21 +1,17 @@
 
-	ares-mon.jopa.dev {
-		proxy / link1:80
-		tls ofj@gmail.com
-	}
-	 {
-		proxy  
-		tls 
-	}
-	 {
-		proxy  
-		tls 
-	}
 	www.jpmatz.de {
 		proxy / link1:80
 		tls ofj@gmail.com
 	}
 	ares.jopa.dev {
 		proxy /site link1:80
+		tls ofj@gmail.com
+	}
+	www.jpmatz.de {
+		proxy link1:80 link/1
+		tls dfasfasfsafdsafsd
+	}
+	ares-mon.jopa.dev {
+		proxy / link1:80
 		tls ofj@gmail.com
 	}

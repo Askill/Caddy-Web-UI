@@ -9,7 +9,7 @@
   <link rel="manifest" href="static/site.webmanifest">
   <link rel="apple-touch-icon" href="static/icon.png">          
   <link rel="stylesheet" href="static/css/normalize.css">
-  <link rel="stylesheet" href="static/css/main.css">
+  
 
   <meta name="theme-color" content="#fafafa">
 
@@ -18,30 +18,30 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/solar/bootstrap.min.css" crossorigin="anonymous">
   <script src="static/js/vendor/modernizr-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  
+  <link rel="stylesheet" href="static/css/main.css">
 
 </head>
 <body onload="loadSites();">
 
 
-<div class="container " id="main" style="margin-top: 300px">
+<div class="container" id="main" style="margin-top: 300px">
   <div id="input" class="card  float-sm-left border-success lg-3 md-4 sm-2" >
         
-    <div class="card-header"><input type="text"  class="form-control" id="domain" placeholder="Domain"></div>
+    <div class="card-header"><input type="text"  class="form-control" id="domain" value="www.Domain.com" placeholder="Domain"></div>
     <div class="card-body">
     <h5 class="card-title">
-        <input type="text"  class="form-control" id="title" placeholder="Title">
+        <input type="text"  class="form-control" id="title" value="Title" placeholder="Title">
     </h4>
 
     <h6 class="card-text"> 
-      <input type="text"  class="form-control" id="target" placeholder="/test">
-      <input type="text"  class="form-control" id="source" placeholder="to:8080">  
+      <input type="text"  class="form-control" id="target" value="origin" placeholder="/test">
+      <input type="text"  class="form-control" id="source" value="destination" placeholder="to:8080">  
     </h6>
     <h6 class="card-text">tls: 
-      <input type="text"  class="form-control" id="email" value="email@example.com">
+      <input type="text"  class="form-control" id="email" value="self_signed" value="email@example.com">
   </h6>
   <p class="card-text">
-      <input type="text"  class="form-control" id="description" placeholder="description">
+      <input type="text"  class="form-control" id="description" value="description" placeholder="description">
   </p>
   <button class="btn btn-primary" onClick="newSite()" id="send">Submit</button>
     </div>

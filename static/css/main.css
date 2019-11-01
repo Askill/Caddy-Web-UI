@@ -1,5 +1,6 @@
 .container{
   overflow: contain;
+  width: 80% !important;
 }
 
 .card{
@@ -8,4 +9,9 @@
   float: left;
   margin: 20px;
   width: 25% !important; 
+  min-width: 200px !important;
+}
+
+.btn{
+  margin:3px !important;
 }

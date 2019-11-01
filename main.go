@@ -57,6 +57,7 @@ func save() {
 	jsonString, _ := json.Marshal(sites)
 	ioutil.WriteFile(saveFile, jsonString, 0777)
 	saveCaddy()
+	restartCaddy()
 }
 
 func saveCaddy() {
@@ -70,8 +71,6 @@ func saveCaddy() {
 	for _, value := range sites {
 		tmpl.Execute(buf, value)
 	}
-
-	fmt.Println("String: ", buf.String())
 
 	f, err := os.OpenFile(saveCaddyFile, os.O_CREATE|os.O_WRONLY, 0777)
 	if err != nil {
@@ -127,9 +126,10 @@ func updateSite(w http.ResponseWriter, r *http.Request) {
 	delete(sites, id)
 	var site Site
 	_ = json.NewDecoder(r.Body).Decode(&site)
-	fmt.Print(site)
 	sites[id] = site
 	json.NewEncoder(w).Encode(site)
+	fmt.Println("Changed Site:")
+	fmt.Println(site)
 	save()
 }
 
@@ -141,6 +141,8 @@ func createSite(w http.ResponseWriter, r *http.Request) {
 	site.Id = newID
 	sites[newID] = site
 	json.NewEncoder(w).Encode(site)
+	fmt.Println("New Site:")
+	fmt.Println(site)
 	save()
 }
 
@@ -150,6 +152,8 @@ func deleteSite(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(params["id"])
 	delete(sites, id)
 	json.NewEncoder(w).Encode(true)
+	fmt.Print("deleted site: ")
+	fmt.Println(id)
 	save()
 }
 
