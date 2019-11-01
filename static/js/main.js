@@ -44,7 +44,7 @@ var deleteJSON = function(url, data, callback) {
 };
 
 function loadSites(){
-    getJSON('http://localhost:8000/api/Sites',
+    getJSON('/api/Sites',
         function(err, data) {
             data = Object.values(data);
             if (err !== null) {
@@ -65,7 +65,6 @@ function renderSite(site){
             <div class="card-header"><a href="https://${site.domain}">${site.domain}</a> </div>
             <div class="card-body">
                 <h4 class="card-title">${site.title}</h4>
-
                 <h6 class="card-text">${site.source} -> ${site.target}</p>
                 <h6 class="card-text">tls: ${site.email}</p>
                 <p class="card-text">${site.description}</p>
@@ -85,9 +84,9 @@ function newSite(){
     json["target"] = document.getElementById('target').value;
     json["email"] = document.getElementById('email').value;
     console.log(json);
-    postJSON("http://localhost:8000/api/Sites", JSON.stringify(json), loadSites);
+    postJSON("/api/Sites", JSON.stringify(json), loadSites);
 }
 
 function deleteSite(id){
-    deleteJSON("http://localhost:8000/api/Sites", id, loadSites)
+    deleteJSON("/api/Sites", id, loadSites)
 }
