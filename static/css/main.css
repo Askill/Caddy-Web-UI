@@ -1,5 +1,11 @@
 .container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: contain;
+}
+
+.card{
+  display: block !important;
+  flex: none;
+  float: left;
+  margin: 20px;
+  width: 25% !important; 
 }
