@@ -2,3 +2,5 @@
 
 A web UI to generate Caddyfiles for simple reverse proxys.
 
+![](./images/demo.PNG)
+
