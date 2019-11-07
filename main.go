@@ -85,7 +85,7 @@ func saveCaddy() {
 }
 
 func startCaddy() {
-	cmd := exec.Command("nohup caddy -agree &")
+	cmd := exec.Command("sh nohup caddy -agree &")
 	stdout, err := cmd.Output()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -96,7 +96,7 @@ func startCaddy() {
 }
 
 func restartCaddy() {
-	cmd := exec.Command("pkill -USR1 caddy")
+	cmd := exec.Command("sh pkill -USR1 caddy")
 	stdout, err := cmd.Output()
 	if err != nil {
 		fmt.Println(err.Error())
